@@ -61,16 +61,28 @@ int countLines(FILE* fin, char str[][COL]){
 
 void everyOtherLine(FILE* fin, char wordType[], int numLines){
 
-	/*int i;
+	int i;
 	char charArray[LENGTH];
 	
-	for(i = 0; i < numLines; i++){
+	/*for(i = 0; i < numLines; i++){
 		if(fgets(charArray, LENGTH, fin) != '\0'){
 			if(i % 2 == 1){
 				wordType[i / 2] = charArray[0];
 			}
 		}
 	}*/
+	
+	for(i = 0; i < numLines; i++){
+		if(charIndex[i][0] == 'A'){
+			wordType[i] = charIndex[i][0];
+		}
+		else if(charIndex[i][0] == 'N'){
+			wordType[i] = charIndex[i][0];
+		}
+		else if(charIndex[i][0] == 'V'){
+			wordType[i] = charIndex[i][0];
+		}
+	}
 	
 }
 
