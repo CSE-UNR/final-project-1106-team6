@@ -1,17 +1,20 @@
 //Peter Sheikman, NAME, NAME
 //12/2/24
-//Madlibs Final Project
+//Madlibs Final Project - CS 135
 
 #include <stdio.h>
-#define FILENAME "madlib1.txt"
-#define COL 50
+#define FILENAME "madlib2.txt"
+#define COL 100
 #define ROW 100
 #define LENGTH 100
 #define WORDLENGTH 50
+#define AMTWORDS 25
 
 int countLines(FILE* fin, char str[][COL]);
-void everyOtherLine(FILE* fin, char wordType[], int numLines);
+void getWordType(FILE* fin, char wordType[], int numLines, char charIndex[][COL]);
 void enterWords(int length, char letterArray[], char wordArray[][WORDLENGTH]);
+void printStory(char fileScanned[][COL], char wordArray[][WORDLENGTH], int lines);
+void printWord(char fileScanned[][COL], char wordArray[][WORDLENGTH], int place);
 
 int main(){
 
@@ -19,26 +22,26 @@ int main(){
 	int lines;
 	char str[ROW][COL];
 	char wordType[LENGTH];
-	int amtWords = 1; //will be updated
-	char wordArray[amtWords][WORDLENGTH];
+	char wordArray[AMTWORDS][WORDLENGTH];
 	
 	fptr = fopen(FILENAME, "r");
 	
 	if(fptr == NULL){
-		printf("Nope\n");
+		printf("File could not open.\n");
+		return 0;
 	}
 	
 	lines = countLines(fptr, str);
 	
-	printf("There are %d lines\n", lines);
-	
-	printf("%s\n", str[0]);
-	
-	everyOtherLine(fptr, wordType, lines);
-	
-	enterWords(amtWords, wordType, wordArray);
+	getWordType(fptr, wordType, lines, str);
 	
 	fclose(fptr);
+	
+	enterWords(AMTWORDS, wordType, wordArray);
+	
+	printStory(str, wordArray, lines);
+	
+	printf("\n");
 
 	return 0;
 }
@@ -47,10 +50,6 @@ int countLines(FILE* fin, char str[][COL]){
 
 	int lines = 0;
 	int indR, indC;
-
-	/*while(fgets(str[indR], 50, fin) != 0){
-		indR ++;
-	} */
 	
 	for(indR = 0; fgets(str[indR], ROW, fin) != 0; indR++){
 		lines++;
@@ -59,18 +58,9 @@ int countLines(FILE* fin, char str[][COL]){
 	return lines;
 }
 
-void everyOtherLine(FILE* fin, char wordType[], int numLines){
+void getWordType(FILE* fin, char wordType[], int numLines, char charIndex[][COL]){
 
 	int i;
-	char charArray[LENGTH];
-	
-	/*for(i = 0; i < numLines; i++){
-		if(fgets(charArray, LENGTH, fin) != '\0'){
-			if(i % 2 == 1){
-				wordType[i / 2] = charArray[0];
-			}
-		}
-	}*/
 	
 	for(i = 0; i < numLines; i++){
 		if(charIndex[i][0] == 'A'){
@@ -100,5 +90,30 @@ void enterWords(int length, char letterArray[], char wordArray[][WORDLENGTH]){
 			printf("Please enter a verb: ");
 			scanf(" %s", &wordArray[i]);
 		}
+	}
+}
+
+void printStory(char fileScanned[][COL], char wordArray[][WORDLENGTH], int lines){
+	
+	for(int i = 0; i < lines; i ++){
+		if(fileScanned[i][0] == 'A' || fileScanned[i][0] == 'N' || fileScanned[i][0] == 'V'){
+			printWord(fileScanned, wordArray, i);
+		}
+		else{
+			for(int j = 0; fileScanned[i][j] != '\n'; j ++){
+				printf("%c", fileScanned[i][j]);
+			}
+		}
+		
+	}
+	
+}
+
+void printWord(char fileScanned[][COL], char wordArray[][WORDLENGTH], int place){
+	if(fileScanned[place+1][0] == '.' || fileScanned[place+1][0] == '!' || fileScanned[place+1][0] == ','){
+		printf(" %s", wordArray[place]);
+	}
+	else{
+		printf(" %s ", wordArray[place]);
 	}
 }
