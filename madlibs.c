@@ -3,7 +3,8 @@
 //Madlibs Final Project - CS 135
 
 #include <stdio.h>
-#define FILENAME "madlib2.txt"
+#define FILEONE "madlib1.txt"
+#define FILETWO "madlib2.txt"
 #define COL 100
 #define ROW 100
 #define LENGTH 100
@@ -23,8 +24,16 @@ int main(){
 	char str[ROW][COL];
 	char wordType[LENGTH];
 	char wordArray[AMTWORDS][WORDLENGTH];
+	int choice;
 	
-	fptr = fopen(FILENAME, "r");
+	printf("Use file 1 or 2? ");
+	scanf("%d", &choice);
+	
+	if(choice == 1){
+		fptr = fopen(FILEONE, "r");
+	} else if(choice == 2){
+		fptr = fopen(FILETWO, "r");
+	}
 	
 	if(fptr == NULL){
 		printf("File could not open.\n");
