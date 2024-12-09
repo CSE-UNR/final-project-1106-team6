@@ -1,4 +1,4 @@
-//Peter Sheikman, NAME, NAME
+//Peter Sheikman, Darell Acebu, Maya Muha
 //12/2/24
 //Madlibs Final Project - CS 135
 
